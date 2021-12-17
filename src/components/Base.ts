@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export default abstract class BaseComponent {
     abstract root: string;
@@ -8,7 +8,7 @@ export default abstract class BaseComponent {
         this.page = page;
     }
 
-    fromRoot(locator: string): string {
-        return `${this.root} ${locator}`
+    fromRoot(locator: string): Locator {
+        return this.page.locator(`${this.root} ${locator}`);
     }
 }
