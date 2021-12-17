@@ -25,7 +25,7 @@ test.describe("auth", () => {
     await expect(sidebar.avatar).toBeVisible();
   });
 
-  test("login errors", async ({ page, loginForm, urls }) => {
+  test("login negative test", async ({ page, loginForm, urls }) => {
     await page.goto(urls.home);
 
     await loginForm.login(email, "wrongPassword13");
