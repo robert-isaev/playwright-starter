@@ -1,22 +1,22 @@
 import BaseComponent from "./Base";
 
-export default class LoginForm extends BaseComponent{
+export default class LoginForm extends BaseComponent {
   public root = ".form-login";
 
   get emailInput() {
-    return this.fromRoot('#signup-field-email');
+    return this.fromRoot("#signup-field-email");
   }
   get passwordInput() {
-    return this.fromRoot('#signup-field-password');
+    return this.fromRoot("#signup-field-password");
   }
   get submitButton() {
-    return this.fromRoot('#signup-button-submit');
+    return this.fromRoot("#signup-button-submit");
   }
   get wrongPasswordError() {
-    return this.fromRoot('p >> text=Incorrect username or password')
+    return this.fromRoot("p >> text=Incorrect username or password");
   }
   get userDoesNotExistError() {
-    return this.fromRoot('p >> text=User does not exist')
+    return this.fromRoot("p >> text=User does not exist");
   }
 
   async login(email: string, password: string): Promise<void> {
