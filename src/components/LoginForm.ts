@@ -10,6 +10,18 @@ export default class LoginForm extends BaseComponent{
     return this.fromRoot('#signup-field-password');
   }
   get submitButton() {
-    return this.fromRoot(`#signup-button-submit`);
+    return this.fromRoot('#signup-button-submit');
+  }
+  get wrongPasswordError() {
+    return this.fromRoot('p >> text=Incorrect username or password')
+  }
+  get userDoesNotExistError() {
+    return this.fromRoot('p >> text=Incorrect username or password')
+  }
+
+  async login(email: string, password: string): Promise<void> {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitButton.click();
   }
 }
