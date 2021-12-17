@@ -1,30 +1,14 @@
-import { test, expect} from '@playwright/test';
+import test from "../util/test";
+import { expect } from "@playwright/test";
+import { generateNewUser, getExistingUser } from "../util/users";
 
-import LoginForm from '../components/LoginForm';
-import SideBar from '../components/Sidebar';
-import SignupForm from '../components/SignupForm';
+test("user can sign up", async ({ page, signupForm, sidebar, urls }) => {
+  const { email, password } = generateNewUser();
 
-const home = 'http://localhost:3000';
-const signup = `${home}/signUp`;
+  await page.goto(urls.signup);
 
-const newUser = {
-  email: `testuser-${Date.now()}@nonexistingadress.com`,
-  password: 'helloWorld13'
-}
-
-const existingUser = {
-  email: 'robert.isaev@gmail.com',
-  password: 'helloWorld26'
-}
-
-test('user can sign up', async ({page}) => {
-  const signupForm = new SignupForm(page);
-  const sidebar = new SideBar(page);
-
-  await page.goto(signup);
-
-  await signupForm.emailInput.fill(newUser.email);
-  await signupForm.passwordInput.fill(newUser.password);
+  await signupForm.emailInput.fill(email);
+  await signupForm.passwordInput.fill(password);
   await signupForm.submitButton.click();
 
   await page.waitForNavigation();
@@ -32,29 +16,24 @@ test('user can sign up', async ({page}) => {
   await expect(sidebar.avatar).toBeVisible();
 });
 
-test('user can sign in', async ({ page }) => {
-  const {email, password} = existingUser;
+test("user can sign in", async ({ page, loginForm, sidebar, urls }) => {
+  const { email, password } = getExistingUser();
 
-  const loginForm = new LoginForm(page);
-  const sideBar = new SideBar(page);
-
-  await page.goto(home);
+  await page.goto(urls.home);
 
   await loginForm.login(email, password);
 
-  await expect(sideBar.avatar).toBeVisible();
+  await expect(sidebar.avatar).toBeVisible();
 });
 
-test('login errors', async ({page}) => {
-  const {email, password} = existingUser;
+test("login errors", async ({ page, loginForm, urls }) => {
+  const { email, password } = getExistingUser();
 
-  const loginForm = new LoginForm(page);
+  await page.goto(urls.home);
 
-  await page.goto(home);
-
-  await loginForm.login(email, 'wrongPassword13');
+  await loginForm.login(email, "wrongPassword13");
   await expect(loginForm.wrongPasswordError).toBeVisible();
 
-  await loginForm.login('emailnotexists@wofooooo.com', password);
+  await loginForm.login("emailnotexists@wofooooo.com", password);
   await expect(loginForm.userDoesNotExistError).toBeVisible();
 });
