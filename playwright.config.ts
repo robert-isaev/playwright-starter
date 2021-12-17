@@ -10,6 +10,7 @@ const config: PlaywrightTestConfig = {
     ignoreHTTPSErrors: true,
     video: "off",
     screenshot: "only-on-failure",
+    trace: "retain-on-failure",
   },
 };
 
