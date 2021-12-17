@@ -1,7 +1,7 @@
 import BaseComponent from "./Base";
 
 export default class LoginForm extends BaseComponent{
-  public root = ".MuiBox-root-16";
+  public root = ".form-login";
 
   get emailInput() {
     return this.fromRoot('#signup-field-email');
@@ -16,7 +16,7 @@ export default class LoginForm extends BaseComponent{
     return this.fromRoot('p >> text=Incorrect username or password')
   }
   get userDoesNotExistError() {
-    return this.fromRoot('p >> text=Incorrect username or password')
+    return this.fromRoot('p >> text=User does not exist')
   }
 
   async login(email: string, password: string): Promise<void> {
