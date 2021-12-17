@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "playwright test",
-    "start:headed": "playwright test --headed"
+    "start:headed": "playwright test --headed",
+    "start:debug": "PWDEBUG=1 playwright test --headed"
   },
   "keywords": [],
   "author": "",
