@@ -1,11 +1,11 @@
 import test from "../util/test";
 import { expect } from "@playwright/test";
-import { generateNewUser, getExistingUser } from "../util/users";
+import { generateNewUser } from "../util/users";
 
 test.describe("auth", () => {
-  test("user can sign up", async ({ page, signupForm, sidebar, urls }) => {
-    const { email, password } = generateNewUser();
+  let { email, password } = generateNewUser();
 
+  test("user can sign up", async ({ page, signupForm, sidebar, urls }) => {
     await page.goto(urls.signup);
 
     await signupForm.emailInput.fill(email);
@@ -18,8 +18,6 @@ test.describe("auth", () => {
   });
 
   test("user can sign in", async ({ page, loginForm, sidebar, urls }) => {
-    const { email, password } = getExistingUser();
-
     await page.goto(urls.home);
 
     await loginForm.login(email, password);
@@ -28,8 +26,6 @@ test.describe("auth", () => {
   });
 
   test("login errors", async ({ page, loginForm, urls }) => {
-    const { email, password } = getExistingUser();
-
     await page.goto(urls.home);
 
     await loginForm.login(email, "wrongPassword13");
